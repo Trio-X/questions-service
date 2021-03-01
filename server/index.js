@@ -3,9 +3,15 @@ const morgan = require("morgan");
 const path = require("path");
 const app = express();
 const port = process.env.PORT || 3004;
-
+const { routerQuestionList } = require("./routers/routerQuestionsList");
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "../public")));
+
+/**
+ * applying @routerQuestionList as a middleware
+ *
+ * */
+app.use("/q", routerQuestionList);
 // the function below is just an example...
 /**
  * @function addition
