@@ -1,12 +1,18 @@
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
+const bodyParser = require("body-parser");
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT;
 const { routerQuestionList } = require("./routers/routerQuestionsList");
 const { routerAnswersList } = require("./routers/routerAnswersList");
+const { routerVoteForQuestions } = require("./routers/routerVoteForQuestions");
+const { routerVoteForAnswer } = require("./routers/routeVoteForAnswer");
+const { routerAddAnswers } = require("./routers/routerAddAnswers");
+const urlencodedParser = bodyParser.urlencoded({ extended: true });
 app.use(morgan("dev"));
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "../public")));
 /**
  * applying @routerQuestionList as a middleware
@@ -14,6 +20,10 @@ app.use(express.static(path.join(__dirname, "../public")));
  * */
 app.use("/q", routerQuestionList);
 app.use("/a", routerAnswersList);
+app.use("/", routerVoteForQuestions);
+app.use("/h", routerVoteForAnswer);
+app.use("/addAnswers", routerAddAnswers);
+
 // the function below is just an example...
 /**
  * @function addition

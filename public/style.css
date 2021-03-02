@@ -1,0 +1,270 @@
+.app-container {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
+.search-bar-questions {
+  background-color: #ffffff !important;
+  border-width: none !important;
+  border-radius: 0% !important;
+  max-width: 700px !important;
+  min-width: 700px !important;
+  min-height: 40px !important;
+  color: black !important;
+  display: inline-block !important;
+  font-size: 19px !important;
+  opacity: none !important;
+  font-weight: bolder !important;
+  gap: normal !important;
+  padding: none !important;
+  margin-left: 15px !important;
+  margin-bottom: 10px !important;
+  margin-top: 5px !important;
+}
+.search-bar-questions-container {
+  max-width: 700px !important;
+  min-width: 700px !important;
+  margin: auto !important;
+  margin-left: 50px;
+}
+.question-title {
+  border-color: #0f1111;
+  color: #0f1111;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 15px;
+  opacity: 0.6;
+  font-weight: 700;
+  gap: normal;
+  font-weight: lighter;
+  line-height: 32px;
+  margin-left: 70px;
+  margin-right: 70px;
+  margin-bottom: 5em;
+  padding: 0px 0px 4px;
+}
+.question-title-container {
+  margin: none;
+}
+.question-questions {
+  border-color: #0f1111;
+  color: #0f1111;
+  font-family: "Noto Sans JP", sans-serif;
+  font-weight: 700px;
+  gap: normal;
+  line-height: 32px;
+  margin: 2%;
+  margin-left: 36px;
+  padding: 0px 0px 0px;
+}
+/* the first css was for the nav bar and the title above it  */
+.answer-style {
+  font-family: "Source Sans Pro", sans-serif;
+  margin: 2%;
+}
+.answer-list {
+  margin: 0;
+}
+.button {
+  margin-top: 5px !important;
+  margin-left: 30px !important;
+  padding: 20px !important;
+  font-weight: bold !important;
+  font-size: 1em !important;
+  border-radius: 0 !important;
+  min-width: 90px !important;
+  min-width: 300px !important;
+}
+.btn-container {
+  display: flex;
+  align-items: baseline;
+  margin: 0;
+}
+.iconn {
+  position: relative !important;
+  float: right !important;
+}
+.summary {
+  max-width: 700px !important;
+  min-width: 400px !important;
+  position: relative !important;
+  display: flex !important;
+  margin: 2px !important;
+  justify-content: flex-end !important;
+  align-items: stretch !important;
+  border-color: #1c1e21 !important;
+  color: #1c1e21 !important;
+  display: flex !important;
+  font-size: 12px !important;
+  gap: normal !important;
+  justify-content: space-between !important;
+  line-height: 16.08px !important;
+  margin: 8px !important;
+  padding: 4px !important;
+}
+.summary-child {
+  align-items: center important;
+  border-color: #1c1e21 important;
+  color: #1c1e21 important;
+  display: flex important;
+  flex-basis: 0px important;
+  font-size: 12px important;
+  gap: normal important;
+  justify-content: center important;
+  line-height: 16.08px important;
+  margin: -6px -4px important;
+  padding: 0px 12px important;
+}
+.divider-answer {
+  font-weight: bold !important;
+}
+
+.image-container {
+  /* max-height: 60px !important;
+  min-height: 50px !important; */
+  display: flex;
+  float: left;
+}
+.avatar {
+  border-radius: 0px !important;
+  margin: 1em !important;
+  max-height: 150px !important;
+  min-height: 50px !important;
+  max-width: 150px !important;
+  min-width: 50px !important;
+}
+#load-more-btn {
+  cursor: pointer !important;
+  margin-left: 70px;
+  margin-right: 70px;
+  font-size: 10px !important;
+  margin-bottom: 0px;
+}
+.Yes-btn {
+  color: black !important;
+  text-decoration: underline !important;
+  cursor: pointer !important;
+  /* border-right: 1px solid black; */
+}
+.helpful-question {
+  display: flex;
+  max-width: 800px !important;
+  min-width: 500px !important;
+  margin-left: 33px !important;
+  margin-right: 33px !important;
+  gap: normal;
+  line-height: 16.08px;
+}
+.answers-container {
+  margin-left: 70px;
+  margin-right: 70px;
+}
+#help-container {
+  position: relative !important;
+  float: right !important;
+  max-width: 150px !important;
+  min-width: 10px !important;
+  /* margin-right: -70% !important; */
+}
+#questions {
+  float: left !important;
+  margin-right: 10px !important;
+}
+
+#bbb {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  padding-top: 60px;
+  /* margin-left: 700px; */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 50%; /* Could be more or less, depending on screen size */
+  height: 70%;
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s;
+}
+
+@-webkit-keyframes animatezoom {
+  from {
+    -webkit-transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes animatezoom {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+button:hover {
+  opacity: 0.8;
+}
+.inverted {
+  background-color: none !important;
+}
