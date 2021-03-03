@@ -166,7 +166,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
             <h5
               className="question-questions"
               id="load-more-btn"
-              onClick={() => setCount(count + 2)}
+              onClick={() => setCounter(answerCounter + 2)}
             >
               LOAD MORE ANSWERS
             </h5>

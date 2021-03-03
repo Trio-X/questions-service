@@ -11,6 +11,8 @@ const Answers = ({
   answerTrigger,
   setAnswerTrigger,
   report,
+  answer,
+  setAnswer,
 }) => {
   // /**
   //  * @store {any}
