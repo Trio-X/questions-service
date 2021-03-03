@@ -5,6 +5,8 @@ import axios from "axios";
 import AddAnswer from "./AddAnswer.jsx";
 import Answers from "./Answers.jsx";
 import AddQuestion from "./AddQuestions.jsx";
+import swal from "sweetalert";
+
 const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
   /**
    * @store {any}
@@ -72,6 +74,18 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
     });
     console.log("clickedOn ");
   };
+
+  const report = (e, answerId) => {
+    e.preventDefault();
+    console.log("clicked", answerId);
+    axios
+      .put("/report/" + answerId)
+      .then(({ data }) => {
+        console.log(data);
+        swal("Good job!", "The report has been sent!", "success");
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div>
       <div>
@@ -118,6 +132,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
                       setCounter={setCounter}
                       answerTrigger={answerTrigger}
                       setAnswerTrigger={setAnswerTrigger}
+                      report={report}
                     />
                   </div>
                 </div>
