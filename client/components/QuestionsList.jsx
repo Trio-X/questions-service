@@ -86,6 +86,20 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
       })
       .catch((err) => console.log(err));
   };
+
+  // report question function
+  const reportQuestion = (e, question_id) => {
+    e.preventDefault();
+    console.log("clicked", question_id);
+    axios
+      .put("/report/question/" + question_id)
+      .then(({ data }) => {
+        console.log(data);
+        swal("Good job!", "The report has been sent!", "success");
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div>
       <div>
@@ -120,6 +134,14 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
                       >
                         <span className="Yes-btn" onClick={() => dis()}>
                           Add Answer
+                        </span>
+                      </div>
+                      <div className="meta ui date summary-child">
+                        <span
+                          className="Yes-btn"
+                          onClick={(e) => reportQuestion(e, Q.question_id)}
+                        >
+                          Report
                         </span>
                       </div>
                     </div>

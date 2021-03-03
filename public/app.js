@@ -55555,6 +55555,21 @@ var QuestionsList = function QuestionsList(_ref) {
       return console.log(err);
     });
   };
+
+  // report question function
+  var reportQuestion = function reportQuestion(e, question_id) {
+    e.preventDefault();
+    console.log("clicked", question_id);
+    _axios2.default.put("/report/question/" + question_id).then(function (_ref5) {
+      var data = _ref5.data;
+
+      console.log(data);
+      (0, _sweetalert2.default)("Good job!", "The report has been sent!", "success");
+    }).catch(function (err) {
+      return console.log(err);
+    });
+  };
+
   return _react2.default.createElement(
     "div",
     null,
@@ -55617,6 +55632,20 @@ var QuestionsList = function QuestionsList(_ref) {
                       return dis();
                     } },
                   "Add Answer"
+                )
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "meta ui date summary-child" },
+                _react2.default.createElement(
+                  "span",
+                  {
+                    className: "Yes-btn",
+                    onClick: function onClick(e) {
+                      return reportQuestion(e, Q.question_id);
+                    }
+                  },
+                  "Report"
                 )
               )
             )
