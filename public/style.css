@@ -170,7 +170,11 @@
   float: left !important;
   margin-right: 10px !important;
 }
-
+#display-question {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
 #bbb {
   display: none;
   width: 100%;
@@ -267,4 +271,10 @@ button:hover {
 }
 .inverted {
   background-color: none !important;
+}
+/* form of add question */
+.form {
+  display: block important;
+  justify-content: center !important;
+  margin-left: 30% !important;
 }

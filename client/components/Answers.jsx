@@ -10,6 +10,9 @@ const Answers = ({
   answerCounter,
   answerTrigger,
   setAnswerTrigger,
+  report,
+  answer,
+  setAnswer,
 }) => {
   // /**
   //  * @store {any}
@@ -112,7 +115,12 @@ const Answers = ({
                             |
                           </div>
                           <div className="meta ui date summary-child">
-                            <span className="Yes-btn">Report</span>
+                            <span
+                              className="Yes-btn"
+                              onClick={(e) => report(e, answer.answer_id)}
+                            >
+                              Report
+                            </span>
                           </div>
                         </div>
                       </div>

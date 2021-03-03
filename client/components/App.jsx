@@ -12,14 +12,14 @@ const App = () => {
    * @param method that can assign that spesific varibale whenever you want with any time you wish.
    */
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
   /**
    * @questions {empty array}
    * @param {array} start with empty array to wait till the we ge the data then render it.
    * @return {array of object} and save it in the global store.
    */
 
-  const [count, setCount] = useState(4);
+  const [count, setCount] = useState(2);
   /**
    * @useDispatch Hooks feature.
    * @param none we save it in a const variable so we can use it to save the data in the global store redux.
@@ -41,7 +41,6 @@ const App = () => {
           };
           dispatch(getQuestions(newData));
           console.log("=>>", newData);
-          console.log(count);
         })
         .catch((err) => console.log(err));
     }

@@ -10,6 +10,9 @@ const { routerAnswersList } = require("./routers/routerAnswersList");
 const { routerVoteForQuestions } = require("./routers/routerVoteForQuestions");
 const { routerVoteForAnswer } = require("./routers/routeVoteForAnswer");
 const { routerAddAnswers } = require("./routers/routerAddAnswers");
+const { routerAddaddQuestion } = require("./routers/routerAddQuestions");
+const { routerReportAnswer } = require("./routers/routerReportAnswer");
+const { routerReportQuestion } = require("./routers/routerReportQuestion");
 const urlencodedParser = bodyParser.urlencoded({ extended: true });
 app.use(morgan("dev"));
 app.use(bodyParser.json());
@@ -23,6 +26,9 @@ app.use("/a", routerAnswersList);
 app.use("/", routerVoteForQuestions);
 app.use("/h", routerVoteForAnswer);
 app.use("/addAnswers", routerAddAnswers);
+app.use("/addquestion", routerAddaddQuestion);
+app.use("/report", routerReportAnswer);
+app.use("/report/question", routerReportQuestion);
 
 // the function below is just an example...
 /**
