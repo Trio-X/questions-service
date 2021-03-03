@@ -1,31 +1,34 @@
 import React, { useState } from "react";
 
-const AddAnswer = ({ dis, exit, onSubmit }) => {
-  const [formData, setFormData] = useState({
+const AddQuestion = ({ dis, exit, onSubmitQuestion, exitQuestion }) => {
+  const [formQ, setFormQuestion] = useState({
     name: "",
     body: "",
     email: "",
-    photos: "",
   });
 
-  const updateFormData = (event) => {
-    setFormData({
-      ...formData,
+  const updateFormQuestion = (event) => {
+    setFormQuestion({
+      ...formQ,
       [event.target.name]: event.target.value,
     });
-    console.log(formData);
+    console.log(formQ);
   };
 
   return (
     <div>
-      <div id="bbb" className="modal">
+      <div id="display-question" className="modal">
         <form className="modal-content animate">
           <div className="imgcontainer">
-            <span onClick={() => exit()} className="close" title="Close Modal">
+            <span
+              onClick={() => exitQuestion()}
+              className="close"
+              title="Close Modal"
+            >
               &times;
             </span>
             <img
-              src="https://i.imgur.com/dGo8DOk.jpg"
+              src="https://images.pexels.com/photos/4989696/pexels-photo-4989696.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
               alt="Avatar"
               className="avatar"
             />
@@ -34,19 +37,19 @@ const AddAnswer = ({ dis, exit, onSubmit }) => {
             <div className="fields">
               <div className="field">
                 <label>Questions</label>
-                <input
-                  onChange={(e) => updateFormData(e)}
+                <textarea
+                  onChange={(e) => updateFormQuestion(e)}
                   placeholder="Questions..."
                   type="text"
                   name="body"
                   required
-                />
+                ></textarea>
               </div>
               <div className="field">
                 <div className="field">
                   <label>Name</label>
                   <input
-                    onChange={(e) => updateFormData(e)}
+                    onChange={(e) => updateFormQuestion(e)}
                     placeholder="name..."
                     type="text"
                     name="name"
@@ -57,22 +60,9 @@ const AddAnswer = ({ dis, exit, onSubmit }) => {
                   <label>Email</label>
                   <input
                     name="email"
-                    onChange={(e) => updateFormData(e)}
+                    onChange={(e) => updateFormQuestion(e)}
                     placeholder="Email address"
                     type="email"
-                    required
-                  />
-                </div>
-              </div>
-              <div className="field">
-                <div className="field">
-                  <label>Photos</label>
-                  <input
-                    type="text"
-                    placeholder="photos.."
-                    name="photos"
-                    onChange={(e) => updateFormData(e)}
-                    placeholder="photos"
                     required
                   />
                 </div>
@@ -81,7 +71,7 @@ const AddAnswer = ({ dis, exit, onSubmit }) => {
             <div className="field">
               <button
                 className="ui basic button"
-                onClick={(e) => onSubmit(e, formData)}
+                onClick={(e) => onSubmitQuestion(e, formQ)}
               >
                 <i className="icon pencil alternate"></i>
                 Submit
@@ -93,4 +83,4 @@ const AddAnswer = ({ dis, exit, onSubmit }) => {
     </div>
   );
 };
-export default AddAnswer;
+export default AddQuestion;

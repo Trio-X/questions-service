@@ -55439,6 +55439,10 @@ var _Answers = __webpack_require__(238);
 
 var _Answers2 = _interopRequireDefault(_Answers);
 
+var _AddQuestions = __webpack_require__(248);
+
+var _AddQuestions2 = _interopRequireDefault(_AddQuestions);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var QuestionsList = function QuestionsList(_ref) {
@@ -55490,16 +55494,45 @@ var QuestionsList = function QuestionsList(_ref) {
   var exit = function exit() {
     document.getElementById("bbb").style.display = "none";
   };
+  var displayQuestion = function displayQuestion() {
+    document.getElementById("display-question").style.display = "block";
+  };
+  var exitQuestion = function exitQuestion() {
+    document.getElementById("display-question").style.display = "none";
+  };
 
   var _useState7 = (0, _react.useState)({}),
       _useState8 = _slicedToArray(_useState7, 2),
-      onSubmitFormForAddQuestion = _useState8[0],
-      setOnSubmitFormForAddQuestion = _useState8[1];
+      formQuestion = _useState8[0],
+      setFormQuestion = _useState8[1];
 
-  var onSubmit = function onSubmit(e) {
+  var onSubmitQuestion = function onSubmitQuestion(e, newData) {
     e.preventDefault();
-    _axios2.default.post("/addAnswers/" + currentQuestionId, { t: "helllo its fakhri" }).then(function (_ref2) {
+    _axios2.default.post("/addquestion/", {
+      body: newData.body,
+      email: newData.email,
+      name: newData.name,
+      product_id: state[0].product_id
+    }).then(function (_ref2) {
       var data = _ref2.data;
+
+      console.log(data);
+    }).catch(function (err) {
+      return console.log(err);
+    });
+    console.log("clickedOn", state[0].product_id);
+  };
+
+  /**
+   *
+   * @param {event} e
+   * @param {*objects} newData containing the data that is collecteted from the add form question
+   * @returns submit a post
+   */
+  var onSubmit = function onSubmit(e, newData) {
+    e.preventDefault();
+    _axios2.default.post("/addAnswers/" + currentQuestionId, newData).then(function (_ref3) {
+      var data = _ref3.data;
 
       console.log(data);
     });
@@ -55612,7 +55645,7 @@ var QuestionsList = function QuestionsList(_ref) {
       ) : null : null,
       _react2.default.createElement(
         "button",
-        { className: "ui basic button" },
+        { className: "ui basic button", onClick: displayQuestion },
         "ADD A QUESTION ",
         _react2.default.createElement("i", { className: "plus icon iconn" })
       )
@@ -55621,6 +55654,16 @@ var QuestionsList = function QuestionsList(_ref) {
       "div",
       null,
       _react2.default.createElement(_AddAnswer2.default, { dis: dis, exit: exit, onSubmit: onSubmit })
+    ),
+    _react2.default.createElement(
+      "div",
+      null,
+      _react2.default.createElement(_AddQuestions2.default, {
+        formQuestion: formQuestion,
+        onSubmitQuestion: onSubmitQuestion,
+        displayQuestion: displayQuestion,
+        exitQuestion: exitQuestion
+      })
     )
   );
 };
@@ -56172,7 +56215,7 @@ var AddAnswer = function AddAnswer(_ref) {
 
   var _useState = (0, _react.useState)({
     name: "",
-    question_text: "",
+    body: "",
     email: "",
     photos: ""
   }),
@@ -56182,7 +56225,7 @@ var AddAnswer = function AddAnswer(_ref) {
 
   var updateFormData = function updateFormData(event) {
     setFormData(_extends({}, formData, _defineProperty({}, event.target.name, event.target.value)));
-    console.log("halim=>", formData);
+    console.log(formData);
   };
 
   return _react2.default.createElement(
@@ -56228,9 +56271,9 @@ var AddAnswer = function AddAnswer(_ref) {
                 onChange: function onChange(e) {
                   return updateFormData(e);
                 },
-                placeholder: "First name",
+                placeholder: "Questions...",
                 type: "text",
-                name: "question_id",
+                name: "body",
                 required: true
               })
             ),
@@ -56249,7 +56292,7 @@ var AddAnswer = function AddAnswer(_ref) {
                   onChange: function onChange(e) {
                     return updateFormData(e);
                   },
-                  placeholder: "Last name",
+                  placeholder: "name...",
                   type: "text",
                   name: "name",
                   required: true
@@ -56292,7 +56335,7 @@ var AddAnswer = function AddAnswer(_ref) {
                   onChange: function onChange(e) {
                     return updateFormData(e);
                   }
-                }, _defineProperty(_React$createElement, "placeholder", "Email address"), _defineProperty(_React$createElement, "type", "text"), _defineProperty(_React$createElement, "required", true), _React$createElement))
+                }, _defineProperty(_React$createElement, "placeholder", "photos"), _defineProperty(_React$createElement, "required", true), _React$createElement))
               )
             )
           ),
@@ -56301,9 +56344,12 @@ var AddAnswer = function AddAnswer(_ref) {
             { className: "field" },
             _react2.default.createElement(
               "button",
-              { className: "ui basic button", onClick: function onClick(e) {
-                  return onSubmit(e);
-                } },
+              {
+                className: "ui basic button",
+                onClick: function onClick(e) {
+                  return onSubmit(e, formData);
+                }
+              },
               _react2.default.createElement("i", { className: "icon pencil alternate" }),
               "Submit"
             )
@@ -57035,6 +57081,165 @@ var thunk = createThunkMiddleware();
 thunk.withExtraArgument = createThunkMiddleware;
 
 /* harmony default export */ __webpack_exports__["default"] = (thunk);
+
+/***/ }),
+/* 248 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var AddQuestion = function AddQuestion(_ref) {
+  var dis = _ref.dis,
+      exit = _ref.exit,
+      onSubmitQuestion = _ref.onSubmitQuestion,
+      exitQuestion = _ref.exitQuestion;
+
+  var _useState = (0, _react.useState)({
+    name: "",
+    body: "",
+    email: ""
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      formQ = _useState2[0],
+      setFormQuestion = _useState2[1];
+
+  var updateFormQuestion = function updateFormQuestion(event) {
+    setFormQuestion(_extends({}, formQ, _defineProperty({}, event.target.name, event.target.value)));
+    console.log(formQ);
+  };
+
+  return _react2.default.createElement(
+    "div",
+    null,
+    _react2.default.createElement(
+      "div",
+      { id: "display-question", className: "modal" },
+      _react2.default.createElement(
+        "form",
+        { className: "modal-content animate" },
+        _react2.default.createElement(
+          "div",
+          { className: "imgcontainer" },
+          _react2.default.createElement(
+            "span",
+            {
+              onClick: function onClick() {
+                return exitQuestion();
+              },
+              className: "close",
+              title: "Close Modal"
+            },
+            "\xD7"
+          ),
+          _react2.default.createElement("img", {
+            src: "https://images.pexels.com/photos/4989696/pexels-photo-4989696.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+            alt: "Avatar",
+            className: "avatar"
+          })
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "ui form" },
+          _react2.default.createElement(
+            "div",
+            { className: "fields" },
+            _react2.default.createElement(
+              "div",
+              { className: "field" },
+              _react2.default.createElement(
+                "label",
+                null,
+                "Questions"
+              ),
+              _react2.default.createElement("textarea", {
+                onChange: function onChange(e) {
+                  return updateFormQuestion(e);
+                },
+                placeholder: "Questions...",
+                type: "text",
+                name: "body",
+                required: true
+              })
+            ),
+            _react2.default.createElement(
+              "div",
+              { className: "field" },
+              _react2.default.createElement(
+                "div",
+                { className: "field" },
+                _react2.default.createElement(
+                  "label",
+                  null,
+                  "Name"
+                ),
+                _react2.default.createElement("input", {
+                  onChange: function onChange(e) {
+                    return updateFormQuestion(e);
+                  },
+                  placeholder: "name...",
+                  type: "text",
+                  name: "name",
+                  required: true
+                })
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "field" },
+                _react2.default.createElement(
+                  "label",
+                  null,
+                  "Email"
+                ),
+                _react2.default.createElement("input", {
+                  name: "email",
+                  onChange: function onChange(e) {
+                    return updateFormQuestion(e);
+                  },
+                  placeholder: "Email address",
+                  type: "email",
+                  required: true
+                })
+              )
+            )
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "field" },
+            _react2.default.createElement(
+              "button",
+              {
+                className: "ui basic button",
+                onClick: function onClick(e) {
+                  return onSubmitQuestion(e, formQ);
+                }
+              },
+              _react2.default.createElement("i", { className: "icon pencil alternate" }),
+              "Submit"
+            )
+          )
+        )
+      )
+    )
+  );
+};
+exports.default = AddQuestion;
 
 /***/ })
 /******/ ]);

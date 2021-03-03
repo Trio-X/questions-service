@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import AddAnswer from "./AddAnswer.jsx";
 import Answers from "./Answers.jsx";
+import AddQuestion from "./AddQuestions.jsx";
 const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
   /**
    * @store {any}
@@ -35,18 +36,40 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
   const exit = () => {
     document.getElementById("bbb").style.display = "none";
   };
-
-  const [onSubmitFormForAddQuestion, setOnSubmitFormForAddQuestion] = useState(
-    {}
-  );
-
-  const onSubmit = (e) => {
+  const displayQuestion = () => {
+    document.getElementById("display-question").style.display = "block";
+  };
+  const exitQuestion = () => {
+    document.getElementById("display-question").style.display = "none";
+  };
+  const [formQuestion, setFormQuestion] = useState({});
+  const onSubmitQuestion = (e, newData) => {
     e.preventDefault();
     axios
-      .post("/addAnswers/" + currentQuestionId, { t: "helllo its fakhri" })
+      .post("/addquestion/", {
+        body: newData.body,
+        email: newData.email,
+        name: newData.name,
+        product_id: state[0].product_id,
+      })
       .then(({ data }) => {
         console.log(data);
-      });
+      })
+      .catch((err) => console.log(err));
+    console.log("clickedOn", state[0].product_id);
+  };
+
+  /**
+   *
+   * @param {event} e
+   * @param {*objects} newData containing the data that is collecteted from the add form question
+   * @returns submit a post
+   */
+  const onSubmit = (e, newData) => {
+    e.preventDefault();
+    axios.post("/addAnswers/" + currentQuestionId, newData).then(({ data }) => {
+      console.log(data);
+    });
     console.log("clickedOn ");
   };
   return (
@@ -124,12 +147,20 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
             </button>
           ) : null
         ) : null}
-        <button className="ui basic button">
+        <button className="ui basic button" onClick={displayQuestion}>
           ADD A QUESTION <i className="plus icon iconn"></i>
         </button>
       </div>
       <div>
         <AddAnswer dis={dis} exit={exit} onSubmit={onSubmit} />
+      </div>
+      <div>
+        <AddQuestion
+          formQuestion={formQuestion}
+          onSubmitQuestion={onSubmitQuestion}
+          displayQuestion={displayQuestion}
+          exitQuestion={exitQuestion}
+        />
       </div>
     </div>
   );
