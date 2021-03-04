@@ -31,7 +31,7 @@ const App = () => {
     let isMounted = true;
     if (isMounted) {
       axios
-        .get("http://localhost:3004/questions/q/" + page + "/" + count)
+        .get("http://68.183.73.106:3004/questions/q/" + page + "/" + count)
         .then(({ data }) => {
           let newData = {
             product_id: data.product_id,

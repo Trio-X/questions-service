@@ -43,7 +43,9 @@ const Answers = ({
     let isMounted = true;
     if (isMounted) {
       axios
-        .get(`http://localhost:3004/questions/a/${questionId}/${answerCounter}`)
+        .get(
+          `http://68.183.73.106:3004/questions/a/${questionId}/${answerCounter}`
+        )
         .then(({ data }) => {
           let newData = {
             question: data.question,
@@ -71,7 +73,7 @@ const Answers = ({
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
-      axios.put("http://localhost:3004/questions/h/" + currentAnswerId);
+      axios.put("http://68.183.73.106:3004/questions/h/" + currentAnswerId);
     }
     return () => {
       setAnswerTrigger(answerTrigger + 1);

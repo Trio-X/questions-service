@@ -24,7 +24,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
-      axios.put("http://localhost:3004/questions/" + currentQuestionId);
+      axios.put("http://68.183.73.106:3004/questions/" + currentQuestionId);
     }
     return () => {
       isMounted = false;
@@ -48,7 +48,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
   const onSubmitQuestion = (e, newData) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3004/questions/addquestion/", {
+      .post("http://68.183.73.106:3004/questions/addquestion/", {
         body: newData.body,
         email: newData.email,
         name: newData.name,
@@ -71,7 +71,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
     e.preventDefault();
     axios
       .post(
-        "http://localhost:3004/questions/addAnswers/" + currentQuestionId,
+        "http://68.183.73.106:3004/questions/addAnswers/" + currentQuestionId,
         newData
       )
       .then(({ data }) => {
@@ -84,7 +84,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
     e.preventDefault();
     console.log("clicked", answerId);
     axios
-      .put("http://localhost:3004/questions/report/" + answerId)
+      .put("http://68.183.73.106:3004/questions/report/" + answerId)
       .then(({ data }) => {
         console.log(data);
         swal("Good job!", "The report has been sent!", "success");
@@ -97,7 +97,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
     e.preventDefault();
     console.log("clicked", question_id);
     axios
-      .put("http://localhost:3004/questions/report/question/" + question_id)
+      .put("http://68.183.73.106:3004/questions/report/question/" + question_id)
       .then(({ data }) => {
         console.log(data);
         swal("Good job!", "The report has been sent!", "success");
