@@ -8,7 +8,7 @@ const reportQuestion = async (req, res) => {
       {},
       {
         headers: {
-          Authorization: process.env.TOKEN,
+          Authorization: "6b62be346efafb380dd1297e6a12cbf825d65953",
         },
       }
     );

@@ -1,4 +1,5 @@
 const axios = require("axios");
+
 module.exports = {
   addAnswer: async (req, res) => {
     try {
@@ -18,7 +19,7 @@ module.exports = {
         },
         {
           headers: {
-            Authorization: process.env.TOKEN,
+            Authorization: "6b62be346efafb380dd1297e6a12cbf825d65953",
           },
         }
       );

@@ -7,7 +7,7 @@ module.exports = {
         `https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/qa/questions/${req.params.question_id}/answers?count=${req.params.count}`,
         {
           headers: {
-            Authorization: process.env.TOKEN,
+            Authorization: "6b62be346efafb380dd1297e6a12cbf825d65953",
           },
         }
       );
