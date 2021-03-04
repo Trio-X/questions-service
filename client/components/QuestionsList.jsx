@@ -24,7 +24,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
-      axios.put("/" + currentQuestionId);
+      axios.put("http://localhost:3004/questions/" + currentQuestionId);
     }
     return () => {
       isMounted = false;
@@ -48,7 +48,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
   const onSubmitQuestion = (e, newData) => {
     e.preventDefault();
     axios
-      .post("/addquestion/", {
+      .post("http://localhost:3004/questions/addquestion/", {
         body: newData.body,
         email: newData.email,
         name: newData.name,
@@ -69,9 +69,14 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
    */
   const onSubmit = (e, newData) => {
     e.preventDefault();
-    axios.post("/addAnswers/" + currentQuestionId, newData).then(({ data }) => {
-      console.log(data);
-    });
+    axios
+      .post(
+        "http://localhost:3004/questions/addAnswers/" + currentQuestionId,
+        newData
+      )
+      .then(({ data }) => {
+        console.log(data);
+      });
     console.log("clickedOn ");
   };
 
@@ -79,7 +84,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
     e.preventDefault();
     console.log("clicked", answerId);
     axios
-      .put("/report/" + answerId)
+      .put("http://localhost:3004/questions/report/" + answerId)
       .then(({ data }) => {
         console.log(data);
         swal("Good job!", "The report has been sent!", "success");
@@ -92,7 +97,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
     e.preventDefault();
     console.log("clicked", question_id);
     axios
-      .put("/report/question/" + question_id)
+      .put("http://localhost:3004/questions/report/question/" + question_id)
       .then(({ data }) => {
         console.log(data);
         swal("Good job!", "The report has been sent!", "success");
@@ -101,7 +106,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
   };
 
   return (
-    <div>
+    <div className="service3-container">
       <div>
         {state.length > 0
           ? state[0].results.map((Q) => {
@@ -149,7 +154,6 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
                   <div className="answers-container">
                     <Answers
                       questionId={Q.question_id}
-                      setAnswer={setAnswer}
                       answerCounter={answerCounter}
                       setCounter={setCounter}
                       answerTrigger={answerTrigger}
@@ -188,7 +192,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
           ADD A QUESTION <i className="plus icon iconn"></i>
         </button>
       </div>
-      <div>
+      <div className="service3-bottom">
         <AddAnswer dis={dis} exit={exit} onSubmit={onSubmit} />
       </div>
       <div>

@@ -24122,7 +24122,7 @@ _reactDom2.default.render(_react2.default.createElement(
   _reactRedux.Provider,
   { store: _store2.default },
   _react2.default.createElement(_App2.default, null)
-), document.getElementById("app"));
+), document.getElementById("service3"));
 
 /***/ }),
 /* 178 */
@@ -54527,7 +54527,7 @@ var App = function App() {
   (0, _react.useEffect)(function () {
     var isMounted = true;
     if (isMounted) {
-      _axios2.default.get("/q/" + page + "/" + count).then(function (_ref) {
+      _axios2.default.get("http://localhost:3004/questions/q/" + page + "/" + count).then(function (_ref) {
         var data = _ref.data;
 
         var newData = {
@@ -54538,7 +54538,6 @@ var App = function App() {
         };
         dispatch((0, _getQuestions2.default)(newData));
         console.log("=>>", newData);
-        console.log(count);
       }).catch(function (err) {
         return console.log(err);
       });
@@ -55554,7 +55553,7 @@ var QuestionsList = function QuestionsList(_ref) {
   (0, _react.useEffect)(function () {
     var isMounted = true;
     if (isMounted) {
-      _axios2.default.put("/" + currentQuestionId);
+      _axios2.default.put("http://localhost:3004/questions/" + currentQuestionId);
     }
     return function () {
       isMounted = false;
@@ -55582,7 +55581,7 @@ var QuestionsList = function QuestionsList(_ref) {
 
   var onSubmitQuestion = function onSubmitQuestion(e, newData) {
     e.preventDefault();
-    _axios2.default.post("/addquestion/", {
+    _axios2.default.post("http://localhost:3004/questions/addquestion/", {
       body: newData.body,
       email: newData.email,
       name: newData.name,
@@ -55605,7 +55604,7 @@ var QuestionsList = function QuestionsList(_ref) {
    */
   var onSubmit = function onSubmit(e, newData) {
     e.preventDefault();
-    _axios2.default.post("/addAnswers/" + currentQuestionId, newData).then(function (_ref3) {
+    _axios2.default.post("http://localhost:3004/questions/addAnswers/" + currentQuestionId, newData).then(function (_ref3) {
       var data = _ref3.data;
 
       console.log(data);
@@ -55616,7 +55615,7 @@ var QuestionsList = function QuestionsList(_ref) {
   var report = function report(e, answerId) {
     e.preventDefault();
     console.log("clicked", answerId);
-    _axios2.default.put("/report/" + answerId).then(function (_ref4) {
+    _axios2.default.put("http://localhost:3004/questions/report/" + answerId).then(function (_ref4) {
       var data = _ref4.data;
 
       console.log(data);
@@ -55630,7 +55629,7 @@ var QuestionsList = function QuestionsList(_ref) {
   var reportQuestion = function reportQuestion(e, question_id) {
     e.preventDefault();
     console.log("clicked", question_id);
-    _axios2.default.put("/report/question/" + question_id).then(function (_ref5) {
+    _axios2.default.put("http://localhost:3004/questions/report/question/" + question_id).then(function (_ref5) {
       var data = _ref5.data;
 
       console.log(data);
@@ -55642,7 +55641,7 @@ var QuestionsList = function QuestionsList(_ref) {
 
   return _react2.default.createElement(
     "div",
-    null,
+    { className: "service3-container" },
     _react2.default.createElement(
       "div",
       null,
@@ -55725,7 +55724,6 @@ var QuestionsList = function QuestionsList(_ref) {
             { className: "answers-container" },
             _react2.default.createElement(_Answers2.default, {
               questionId: Q.question_id,
-              setAnswer: setAnswer,
               answerCounter: answerCounter,
               setCounter: setCounter,
               answerTrigger: answerTrigger,
@@ -55741,7 +55739,7 @@ var QuestionsList = function QuestionsList(_ref) {
           className: "question-questions",
           id: "load-more-btn",
           onClick: function onClick() {
-            return setCount(count + 2);
+            return setCounter(answerCounter + 2);
           }
         },
         "LOAD MORE ANSWERS"
@@ -55769,7 +55767,7 @@ var QuestionsList = function QuestionsList(_ref) {
     ),
     _react2.default.createElement(
       "div",
-      null,
+      { className: "service3-bottom" },
       _react2.default.createElement(_AddAnswer2.default, { dis: dis, exit: exit, onSubmit: onSubmit })
     ),
     _react2.default.createElement(
@@ -56551,7 +56549,7 @@ var Answers = function Answers(_ref) {
   (0, _react.useEffect)(function () {
     var isMounted = true;
     if (isMounted) {
-      _axios2.default.get("/a/" + questionId + "/" + answerCounter).then(function (_ref2) {
+      _axios2.default.get("http://localhost:3004/questions/a/" + questionId + "/" + answerCounter).then(function (_ref2) {
         var data = _ref2.data;
 
         var newData = {
@@ -56588,7 +56586,7 @@ var Answers = function Answers(_ref) {
   (0, _react.useEffect)(function () {
     var isMounted = true;
     if (isMounted) {
-      _axios2.default.put("/h/" + currentAnswerId);
+      _axios2.default.put("http://localhost:3004/questions/h/" + currentAnswerId);
     }
     return function () {
       setAnswerTrigger(answerTrigger + 1);
