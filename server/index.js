@@ -14,6 +14,8 @@ const { routerAddaddQuestion } = require("./routers/routerAddQuestions");
 const { routerReportAnswer } = require("./routers/routerReportAnswer");
 const { routerReportQuestion } = require("./routers/routerReportQuestion");
 const urlencodedParser = bodyParser.urlencoded({ extended: true });
+const cors = require("cors");
+app.use(cors());
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "../public")));
@@ -21,14 +23,14 @@ app.use(express.static(path.join(__dirname, "../public")));
  * applying @routerQuestionList as a middleware
  *
  * */
-app.use("/q", routerQuestionList);
-app.use("/a", routerAnswersList);
-app.use("/", routerVoteForQuestions);
-app.use("/h", routerVoteForAnswer);
-app.use("/addAnswers", routerAddAnswers);
-app.use("/addquestion", routerAddaddQuestion);
-app.use("/report", routerReportAnswer);
-app.use("/report/question", routerReportQuestion);
+app.use("/questions/q", routerQuestionList);
+app.use("/questions/a", routerAnswersList);
+app.use("/questions/", routerVoteForQuestions);
+app.use("/questions/h", routerVoteForAnswer);
+app.use("/questions/addAnswers", routerAddAnswers);
+app.use("/questions/addquestion", routerAddaddQuestion);
+app.use("/questions/report", routerReportAnswer);
+app.use("/questions/report/question", routerReportQuestion);
 
 // the function below is just an example...
 /**

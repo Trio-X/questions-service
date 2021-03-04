@@ -11,8 +11,6 @@ const Answers = ({
   answerTrigger,
   setAnswerTrigger,
   report,
-  answer,
-  setAnswer,
 }) => {
   // /**
   //  * @store {any}
@@ -45,7 +43,7 @@ const Answers = ({
     let isMounted = true;
     if (isMounted) {
       axios
-        .get(`/a/${questionId}/${answerCounter}`)
+        .get(`http://localhost:3004/questions/a/${questionId}/${answerCounter}`)
         .then(({ data }) => {
           let newData = {
             question: data.question,
@@ -73,7 +71,7 @@ const Answers = ({
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
-      axios.put("/h/" + currentAnswerId);
+      axios.put("http://localhost:3004/questions/h/" + currentAnswerId);
     }
     return () => {
       setAnswerTrigger(answerTrigger + 1);
