@@ -19,7 +19,6 @@ const SearchBar = () => {
    */
 
   useEffect(() => {
-    console.log("Search=>", state);
     return () => {
       if (!query) {
         setHandleChange(null);
