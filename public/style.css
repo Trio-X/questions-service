@@ -2,7 +2,8 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 40%;
+  width: 60%;
+  margin-bottom: 5%;
 }
 .search-bar-questions {
   background-color: #ffffff !important;
@@ -164,7 +165,7 @@
   float: right !important;
   max-width: 150px !important;
   min-width: 10px !important;
-  /* margin-right: -70% !important; */
+  margin-right: -70% !important;
 }
 #questions {
   float: left !important;

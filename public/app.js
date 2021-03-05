@@ -24118,11 +24118,17 @@ var _store2 = _interopRequireDefault(_store);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// ReactDOM.render(
+//   <Provider store={store}>
+//     <App />
+//   </Provider>,
+//   document.getElementById("service3")
+// );
 _reactDom2.default.render(_react2.default.createElement(
   _reactRedux.Provider,
   { store: _store2.default },
   _react2.default.createElement(_App2.default, null)
-), document.getElementById("service3"));
+), document.getElementById("app"));
 
 /***/ }),
 /* 178 */
@@ -54527,7 +54533,7 @@ var App = function App() {
   (0, _react.useEffect)(function () {
     var isMounted = true;
     if (isMounted) {
-      _axios2.default.get("http://localhost:3004/questions/q/" + page + "/" + count).then(function (_ref) {
+      _axios2.default.get("http://68.183.73.106:3004/questions/q/" + page + "/" + count).then(function (_ref) {
         var data = _ref.data;
 
         var newData = {
@@ -54537,7 +54543,6 @@ var App = function App() {
           })
         };
         dispatch((0, _getQuestions2.default)(newData));
-        console.log("=>>", newData);
       }).catch(function (err) {
         return console.log(err);
       });
@@ -54553,7 +54558,7 @@ var App = function App() {
     _react2.default.createElement(
       "div",
       null,
-      _react2.default.createElement(_SearchBar2.default, null)
+      _react2.default.createElement(_SearchBar2.default, { setPage: setPage, count: count, page: page })
     ),
     _react2.default.createElement(
       "div",
@@ -54583,6 +54588,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(6);
 
+var _getQuestions = __webpack_require__(246);
+
+var _getQuestions2 = _interopRequireDefault(_getQuestions);
+
 var _axios = __webpack_require__(8);
 
 var _axios2 = _interopRequireDefault(_axios);
@@ -54591,7 +54600,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var SearchBar = function SearchBar() {
+var SearchBar = function SearchBar(_ref) {
+  var count = _ref.count,
+      setPage = _ref.setPage,
+      page = _ref.page;
+
   /**
    * @setHandleChange method for the search bar.
    * @param query, filter the questions according the first 3 letters.
@@ -54604,7 +54617,6 @@ var SearchBar = function SearchBar() {
   var state = (0, _reactRedux.useSelector)(function (state) {
     return state.getQuestionsList;
   });
-
   /**
    * @useEffect Hooks feature.
    * @param callback
@@ -54612,14 +54624,46 @@ var SearchBar = function SearchBar() {
    * if you do not want keep tracking a variable changes.
    * we use it in this case to keep tracking the query that was provided by the user.
    */
-
+  var dispatch = (0, _reactRedux.useDispatch)();
   (0, _react.useEffect)(function () {
-    console.log("Search=>", state);
-    return function () {
+    var isMounted = true;
+    if (isMounted) {
       if (!query) {
-        setHandleChange(null);
-      } else {
-        console.log(query);
+        setHandleChange("");
+      } else if (state[0] && query.search.length > 3) {
+        var currentProductID = state[0].product_id;
+        var currentQuestioList = [];
+        state[0].results.filter(function (q) {
+          if (q.question_body.toUpperCase().includes(query.search.toUpperCase())) {
+            console.log("matchii", q.question_body);
+            currentQuestioList.push(q);
+          }
+        });
+        if (currentQuestioList.length > 0) {
+          dispatch((0, _getQuestions2.default)({
+            product_id: "11048",
+            results: currentQuestioList
+          }));
+        }
+      }
+    }
+    return function () {
+      isMounted = false;
+      if (query.search.length < 3) {
+        _axios2.default.get("http://68.183.73.106:3004/questions/q/" + page + "/" + count).then(function (_ref2) {
+          var data = _ref2.data;
+
+          console.log(1);
+          var newData = {
+            product_id: data.product_id,
+            results: data.results.sort(function (a, b) {
+              return b.question_helpfulness - a.question_helpfulness;
+            })
+          };
+          dispatch((0, _getQuestions2.default)(newData));
+        }).catch(function (err) {
+          return console.log(err);
+        });
       }
     };
   }, [query]);
@@ -55530,20 +55574,46 @@ var QuestionsList = function QuestionsList(_ref) {
    * @param state
    * @return any key value paris from the global store. for example: {getQuestionsList}
    */
+  var state = (0, _reactRedux.useSelector)(function (state) {
+    return state.getQuestionsList;
+  });
+  console.log(state);
+
+  /**
+   *
+   */
+
   var _useState = (0, _react.useState)(0),
       _useState2 = _slicedToArray(_useState, 2),
       answerTrigger = _useState2[0],
       setAnswerTrigger = _useState2[1];
+
+  /**
+   * Showing Answers below each questions
+   * @setCounter a hook method sets the value of @answerCounter
+   *
+   */
+
 
   var _useState3 = (0, _react.useState)(2),
       _useState4 = _slicedToArray(_useState3, 2),
       answerCounter = _useState4[0],
       setCounter = _useState4[1];
 
-  var state = (0, _reactRedux.useSelector)(function (state) {
-    return state.getQuestionsList;
-  });
-  console.log(state);
+  (0, _react.useEffect)(function () {
+    var isMounted = true;
+    if (isMounted) {
+      _axios2.default.get("http://68.183.73.106:3004/questions/a/" + currentQuestionId + "/" + answerCounter);
+    }
+    return function () {
+      isMounted = false;
+      setAnswerTrigger(answerTrigger + 1);
+    };
+  }, [answerCounter, answerTrigger]);
+
+  /**
+   * @setQestionId a hook method sets the value @currentQuestionId call it whenever you want to increment the count number of the questions
+   */
 
   var _useState5 = (0, _react.useState)(null),
       _useState6 = _slicedToArray(_useState5, 2),
@@ -55553,35 +55623,69 @@ var QuestionsList = function QuestionsList(_ref) {
   (0, _react.useEffect)(function () {
     var isMounted = true;
     if (isMounted) {
-      _axios2.default.put("http://localhost:3004/questions/" + currentQuestionId);
+      _axios2.default.put("http://68.183.73.106:3004/questions/" + currentQuestionId);
     }
     return function () {
       isMounted = false;
       setAnswerTrigger(answerTrigger + 1);
     };
   }, [currentQuestionId, answerTrigger]);
-  // add answers pop up component
+  /**
+   * @dis a function that display the modal of adding an answer and it wil pop up component addAnswer.
+   * @param none
+   *
+   */
   var dis = function dis() {
     document.getElementById("bbb").style.display = "block";
   };
+  /**
+   * @exit a function that display the modal of adding an answer and it wil pop out component addAnswer.
+   * @param none
+   *
+   */
   var exit = function exit() {
     document.getElementById("bbb").style.display = "none";
   };
+
+  /**
+   * @displayQuestion a function that display the modal of adding an Question and it wil pop up component addQuestion.
+   * @param none
+   *
+   */
   var displayQuestion = function displayQuestion() {
     document.getElementById("display-question").style.display = "block";
   };
+
+  /**
+   * @exitQuestion a function that display the modal of adding an Question and it wil pop out component addQuestion.
+   * @param none
+   *
+   */
+
   var exitQuestion = function exitQuestion() {
     document.getElementById("display-question").style.display = "none";
   };
+
+  /**
+   * @formQuestion a varibale create by hooks feature
+   */
 
   var _useState7 = (0, _react.useState)({}),
       _useState8 = _slicedToArray(_useState7, 2),
       formQuestion = _useState8[0],
       setFormQuestion = _useState8[1];
 
+  /**
+   * @onSubmitQuestion
+   * @param {event} e
+   * @param {*object} newData is a return object of a child component
+   *
+   */
+
+
   var onSubmitQuestion = function onSubmitQuestion(e, newData) {
     e.preventDefault();
-    _axios2.default.post("http://localhost:3004/questions/addquestion/", {
+    _axios2.default.post("http://68.183.73.106:3004/questions/addquestion/", {
       body: newData.body,
       email: newData.email,
       name: newData.name,
@@ -55604,7 +55708,7 @@ var QuestionsList = function QuestionsList(_ref) {
    */
   var onSubmit = function onSubmit(e, newData) {
     e.preventDefault();
-    _axios2.default.post("http://localhost:3004/questions/addAnswers/" + currentQuestionId, newData).then(function (_ref3) {
+    _axios2.default.post("http://68.183.73.106:3004/questions/addAnswers/" + currentQuestionId, newData).then(function (_ref3) {
       var data = _ref3.data;
 
       console.log(data);
@@ -55615,7 +55719,7 @@ var QuestionsList = function QuestionsList(_ref) {
   var report = function report(e, answerId) {
     e.preventDefault();
     console.log("clicked", answerId);
-    _axios2.default.put("http://localhost:3004/questions/report/" + answerId).then(function (_ref4) {
+    _axios2.default.put("http://68.183.73.106:3004/questions/report/" + answerId).then(function (_ref4) {
       var data = _ref4.data;
 
       console.log(data);
@@ -55629,7 +55733,7 @@ var QuestionsList = function QuestionsList(_ref) {
   var reportQuestion = function reportQuestion(e, question_id) {
     e.preventDefault();
     console.log("clicked", question_id);
-    _axios2.default.put("http://localhost:3004/questions/report/question/" + question_id).then(function (_ref5) {
+    _axios2.default.put("http://68.183.73.106:3004/questions/report/question/" + question_id).then(function (_ref5) {
       var data = _ref5.data;
 
       console.log(data);
@@ -55638,7 +55742,6 @@ var QuestionsList = function QuestionsList(_ref) {
       return console.log(err);
     });
   };
-
   return _react2.default.createElement(
     "div",
     { className: "service3-container" },
@@ -55733,7 +55836,7 @@ var QuestionsList = function QuestionsList(_ref) {
           )
         );
       }) : null,
-      state[0] ? count === state[0].results.length ? _react2.default.createElement(
+      state[0] ? answerCounter < state[0].results.length && count === state[0].results.length ? _react2.default.createElement(
         "h5",
         {
           className: "question-questions",
@@ -56380,13 +56483,13 @@ var AddAnswer = function AddAnswer(_ref) {
               _react2.default.createElement(
                 "label",
                 null,
-                "Questions"
+                "Add Answer"
               ),
               _react2.default.createElement("input", {
                 onChange: function onChange(e) {
                   return updateFormData(e);
                 },
-                placeholder: "Questions...",
+                placeholder: "Answer...",
                 type: "text",
                 name: "body",
                 required: true
@@ -56450,7 +56553,7 @@ var AddAnswer = function AddAnswer(_ref) {
                   onChange: function onChange(e) {
                     return updateFormData(e);
                   }
-                }, _defineProperty(_React$createElement, "placeholder", "photos"), _defineProperty(_React$createElement, "required", true), _React$createElement))
+                }, _defineProperty(_React$createElement, "placeholder", "photos link..."), _defineProperty(_React$createElement, "required", true), _React$createElement))
               )
             )
           ),
@@ -56549,7 +56652,7 @@ var Answers = function Answers(_ref) {
   (0, _react.useEffect)(function () {
     var isMounted = true;
     if (isMounted) {
-      _axios2.default.get("http://localhost:3004/questions/a/" + questionId + "/" + answerCounter).then(function (_ref2) {
+      _axios2.default.get("http://68.183.73.106:3004/questions/a/" + questionId + "/" + answerCounter).then(function (_ref2) {
         var data = _ref2.data;
 
         var newData = {
@@ -56586,7 +56689,7 @@ var Answers = function Answers(_ref) {
   (0, _react.useEffect)(function () {
     var isMounted = true;
     if (isMounted) {
-      _axios2.default.put("http://localhost:3004/questions/h/" + currentAnswerId);
+      _axios2.default.put("http://68.183.73.106:3004/questions/h/" + currentAnswerId);
     }
     return function () {
       setAnswerTrigger(answerTrigger + 1);
@@ -56634,6 +56737,7 @@ var Answers = function Answers(_ref) {
                       "By ",
                       answer.answerer_name,
                       ",",
+                      " ",
                       (0, _moment2.default)(answer.data).format("MMM Do YY")
                     ),
                     _react2.default.createElement(
@@ -56656,6 +56760,7 @@ var Answers = function Answers(_ref) {
                         },
                         "Yes"
                       ),
+                      " ",
                       "(",
                       answer.helpfulness,
                       ")"

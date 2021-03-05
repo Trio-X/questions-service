@@ -40,7 +40,6 @@ const App = () => {
             ),
           };
           dispatch(getQuestions(newData));
-          console.log("=>>", newData);
         })
         .catch((err) => console.log(err));
     }
@@ -52,7 +51,7 @@ const App = () => {
   return (
     <div className="app-container">
       <div>
-        <SearchBar />
+        <SearchBar setPage={setPage} count={count} page={page} />
       </div>
       <div>
         <QuestionsList setCount={setCount} setPage={setPage} count={count} />

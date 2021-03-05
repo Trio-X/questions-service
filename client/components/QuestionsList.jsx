@@ -14,12 +14,36 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
    * @param state
    * @return any key value paris from the global store. for example: {getQuestionsList}
    */
-  const [answerTrigger, setAnswerTrigger] = useState(0);
-
-  const [answerCounter, setCounter] = useState(2);
-
   const state = useSelector((state) => state.getQuestionsList);
   console.log(state);
+
+  /**
+   *
+   */
+  const [answerTrigger, setAnswerTrigger] = useState(0);
+
+  /**
+   * Showing Answers below each questions
+   * @setCounter a hook method sets the value of @answerCounter
+   *
+   */
+  const [answerCounter, setCounter] = useState(2);
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      axios.get(
+        `http://68.183.73.106:3004/questions/a/${currentQuestionId}/${answerCounter}`
+      );
+    }
+    return () => {
+      isMounted = false;
+      setAnswerTrigger(answerTrigger + 1);
+    };
+  }, [answerCounter, answerTrigger]);
+
+  /**
+   * @setQestionId a hook method sets the value @currentQuestionId call it whenever you want to increment the count number of the questions
+   */
   const [currentQuestionId, setQestionId] = useState(null);
   useEffect(() => {
     let isMounted = true;
@@ -31,20 +55,53 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
       setAnswerTrigger(answerTrigger + 1);
     };
   }, [currentQuestionId, answerTrigger]);
-  // add answers pop up component
+  /**
+   * @dis a function that display the modal of adding an answer and it wil pop up component addAnswer.
+   * @param none
+   *
+   */
   const dis = () => {
     document.getElementById("bbb").style.display = "block";
   };
+  /**
+   * @exit a function that display the modal of adding an answer and it wil pop out component addAnswer.
+   * @param none
+   *
+   */
   const exit = () => {
     document.getElementById("bbb").style.display = "none";
   };
+
+  /**
+   * @displayQuestion a function that display the modal of adding an Question and it wil pop up component addQuestion.
+   * @param none
+   *
+   */
   const displayQuestion = () => {
     document.getElementById("display-question").style.display = "block";
   };
+
+  /**
+   * @exitQuestion a function that display the modal of adding an Question and it wil pop out component addQuestion.
+   * @param none
+   *
+   */
+
   const exitQuestion = () => {
     document.getElementById("display-question").style.display = "none";
   };
+
+  /**
+   * @formQuestion a varibale create by hooks feature
+   */
   const [formQuestion, setFormQuestion] = useState({});
+
+  /**
+   * @onSubmitQuestion
+   * @param {event} e
+   * @param {*object} newData is a return object of a child component
+   *
+   */
   const onSubmitQuestion = (e, newData) => {
     e.preventDefault();
     axios
@@ -104,7 +161,6 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
       })
       .catch((err) => console.log(err));
   };
-
   return (
     <div className="service3-container">
       <div>
@@ -166,6 +222,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
             })
           : null}
         {state[0] ? (
+          answerCounter < state[0].results.length &&
           count === state[0].results.length ? (
             <h5
               className="question-questions"

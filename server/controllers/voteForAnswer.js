@@ -1,5 +1,5 @@
 const axios = require("axios");
-
+const { token } = require("../index");
 const voteAnswer = async (req, res) => {
   try {
     console.log(req.params);
@@ -8,7 +8,7 @@ const voteAnswer = async (req, res) => {
       {},
       {
         headers: {
-          Authorization: "6b62be346efafb380dd1297e6a12cbf825d65953",
+          Authorization: token,
         },
       }
     );

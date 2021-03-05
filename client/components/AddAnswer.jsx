@@ -33,10 +33,10 @@ const AddAnswer = ({ dis, exit, onSubmit }) => {
           <div className="ui form">
             <div className="fields">
               <div className="field">
-                <label>Questions</label>
+                <label>Add Answer</label>
                 <input
                   onChange={(e) => updateFormData(e)}
-                  placeholder="Questions..."
+                  placeholder="Answer..."
                   type="text"
                   name="body"
                   required
@@ -72,7 +72,7 @@ const AddAnswer = ({ dis, exit, onSubmit }) => {
                     placeholder="photos.."
                     name="photos"
                     onChange={(e) => updateFormData(e)}
-                    placeholder="photos"
+                    placeholder="photos link..."
                     required
                   />
                 </div>
