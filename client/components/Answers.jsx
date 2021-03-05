@@ -95,7 +95,7 @@ const Answers = ({
                       <div>
                         <div className="summary">
                           <div className="ui date summary-child">
-                            By {answer.answerer_name},
+                            By {answer.answerer_name},{" "}
                             {moment(answer.data).format("MMM Do YY")}
                           </div>
                           <div className="ui date summary-child divider-answer">
@@ -108,7 +108,7 @@ const Answers = ({
                               onClick={() => setAnswers(answer.answer_id)}
                             >
                               Yes
-                            </span>
+                            </span>{" "}
                             ({answer.helpfulness})
                           </div>
                           <div className="ui date summary-child divider-answer">

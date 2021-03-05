@@ -1,5 +1,5 @@
 const axios = require("axios");
-
+const { token } = require("../index");
 module.exports = {
   addAnswer: async (req, res) => {
     try {
@@ -19,7 +19,7 @@ module.exports = {
         },
         {
           headers: {
-            Authorization: "6b62be346efafb380dd1297e6a12cbf825d65953",
+            Authorization: token,
           },
         }
       );
