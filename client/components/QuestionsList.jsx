@@ -178,7 +178,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
                     </h4>
                     <div id="help-container" className="summary">
                       <div className="meta ui date summary-child">
-                        Helpful?
+                        Helpful?{" "}
                         <span
                           className="Yes-btn"
                           onClick={() => setQestionId(Q.question_id)}
@@ -196,6 +196,9 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
                         <span className="Yes-btn" onClick={() => dis()}>
                           Add Answer
                         </span>
+                      </div>
+                      <div className="ui date summary-child divider-answer">
+                        |
                       </div>
                       <div className="meta ui date summary-child">
                         <span
@@ -235,19 +238,21 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
         ) : null}
       </div>
       <div className="btn-container">
-        {state[0] ? (
-          count === state[0].results.length ? (
-            <button
-              className="ui basic button"
-              onClick={() => setCount(count + 2)}
-            >
-              MORE ANSWERED QUESTIONS
-            </button>
-          ) : null
-        ) : null}
-        <button className="ui basic button" onClick={displayQuestion}>
-          ADD A QUESTION <i className="plus icon iconn"></i>
-        </button>
+        <div className="btn-questions">
+          {state[0] ? (
+            count === state[0].results.length ? (
+              <button
+                className="ui basic button"
+                onClick={() => setCount(count + 2)}
+              >
+                MORE ANSWERED QUESTIONS
+              </button>
+            ) : null
+          ) : null}
+          <button className="ui basic button" onClick={displayQuestion}>
+            ADD A QUESTION <i className="plus icon iconn"></i>
+          </button>
+        </div>
       </div>
       <div className="service3-bottom">
         <AddAnswer dis={dis} exit={exit} onSubmit={onSubmit} />
