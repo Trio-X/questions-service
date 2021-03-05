@@ -19,7 +19,7 @@ const App = () => {
    * @return {array of object} and save it in the global store.
    */
 
-  const [count, setCount] = useState(4);
+  const [count, setCount] = useState(5);
   /**
    * @useDispatch Hooks feature.
    * @param none we save it in a const variable so we can use it to save the data in the global store redux.

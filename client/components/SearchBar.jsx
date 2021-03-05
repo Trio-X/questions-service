@@ -76,6 +76,7 @@ const SearchBar = ({ count, setPage, page }) => {
           <i className="search icon"></i>
           <input
             type="search-question "
+            id="search-bar-questions"
             className="search-bar-questions"
             placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..."
             name="search"
