@@ -54543,7 +54543,7 @@ var App = function App() {
    * @return {array of object} and save it in the global store.
    */
 
-  var _useState3 = (0, _react.useState)(5),
+  var _useState3 = (0, _react.useState)(6),
       _useState4 = _slicedToArray(_useState3, 2),
       count = _useState4[0],
       setCount = _useState4[1];
@@ -54554,22 +54554,27 @@ var App = function App() {
 
   var dispatch = (0, _reactRedux.useDispatch)();
 
+  var getDataQuestions = function getDataQuestions() {
+    // http://68.183.73.106:3004
+    _axios2.default.get("http://68.183.73.106:3004/questions/q/" + page + "/" + count).then(function (_ref) {
+      var data = _ref.data;
+
+      console.log(data);
+      var newData = {
+        product_id: data.product_id,
+        results: data.results.sort(function (a, b) {
+          return b.question_helpfulness - a.question_helpfulness;
+        })
+      };
+      dispatch((0, _getQuestions2.default)(newData));
+    }).catch(function (err) {
+      return console.log(err);
+    });
+  };
   (0, _react.useEffect)(function () {
     var isMounted = true;
     if (isMounted) {
-      _axios2.default.get("http://68.183.73.106:3004/questions/q/" + page + "/" + count).then(function (_ref) {
-        var data = _ref.data;
-
-        var newData = {
-          product_id: data.product_id,
-          results: data.results.sort(function (a, b) {
-            return b.question_helpfulness - a.question_helpfulness;
-          })
-        };
-        dispatch((0, _getQuestions2.default)(newData));
-      }).catch(function (err) {
-        return console.log(err);
-      });
+      getDataQuestions();
     }
     return function () {
       isMounted = false;
@@ -54582,12 +54587,22 @@ var App = function App() {
     _react2.default.createElement(
       "div",
       null,
-      _react2.default.createElement(_SearchBar2.default, { setPage: setPage, count: count, page: page })
+      _react2.default.createElement(_SearchBar2.default, {
+        setPage: setPage,
+        count: count,
+        page: page,
+        getDataQuestions: getDataQuestions
+      })
     ),
     _react2.default.createElement(
       "div",
       null,
-      _react2.default.createElement(_QuestionsList2.default, { setCount: setCount, setPage: setPage, count: count })
+      _react2.default.createElement(_QuestionsList2.default, {
+        setCount: setCount,
+        setPage: setPage,
+        count: count,
+        getDataQuestions: getDataQuestions
+      })
     )
   );
 };
@@ -54627,7 +54642,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var SearchBar = function SearchBar(_ref) {
   var count = _ref.count,
       setPage = _ref.setPage,
-      page = _ref.page;
+      page = _ref.page,
+      getDataQuestions = _ref.getDataQuestions;
 
   /**
    * @setHandleChange method for the search bar.
@@ -54655,7 +54671,6 @@ var SearchBar = function SearchBar(_ref) {
       if (!query) {
         setHandleChange("");
       } else if (state[0] && query.search.length > 3) {
-        var currentProductID = state[0].product_id;
         var currentQuestioList = [];
         state[0].results.filter(function (q) {
           if (q.question_body.toUpperCase().includes(query.search.toUpperCase())) {
@@ -54674,20 +54689,7 @@ var SearchBar = function SearchBar(_ref) {
     return function () {
       isMounted = false;
       if (query.search.length < 3) {
-        _axios2.default.get("http://68.183.73.106:3004/questions/q/" + page + "/" + count).then(function (_ref2) {
-          var data = _ref2.data;
-
-          console.log(1);
-          var newData = {
-            product_id: data.product_id,
-            results: data.results.sort(function (a, b) {
-              return b.question_helpfulness - a.question_helpfulness;
-            })
-          };
-          dispatch((0, _getQuestions2.default)(newData));
-        }).catch(function (err) {
-          return console.log(err);
-        });
+        getDataQuestions();
       }
     };
   }, [query]);
@@ -55591,7 +55593,8 @@ var QuestionsList = function QuestionsList(_ref) {
   var setCount = _ref.setCount,
       setAnswer = _ref.setAnswer,
       setPage = _ref.setPage,
-      count = _ref.count;
+      count = _ref.count,
+      getDataQuestions = _ref.getDataQuestions;
 
   /**
    * @store {any}
@@ -55654,7 +55657,7 @@ var QuestionsList = function QuestionsList(_ref) {
       isMounted = false;
       setAnswerTrigger(answerTrigger + 1);
     };
-  }, [currentQuestionId, answerTrigger]);
+  }, [currentQuestionId]);
   /**
    * @dis a function that display the modal of adding an answer and it wil pop up component addAnswer.
    * @param none
@@ -55719,6 +55722,7 @@ var QuestionsList = function QuestionsList(_ref) {
       var data = _ref2.data;
 
       console.log(data);
+      getDataQuestions();
     }).catch(function (err) {
       return console.log(err);
     });
@@ -55744,13 +55748,27 @@ var QuestionsList = function QuestionsList(_ref) {
   var report = function report(e, answerId) {
     e.preventDefault();
     console.log("clicked", answerId);
-    _axios2.default.put("http://68.183.73.106:3004/questions/report/" + answerId).then(function (_ref4) {
-      var data = _ref4.data;
+    (0, _sweetalert2.default)({
+      title: "Are you sure?",
+      text: "Once you click ok the report will be sent!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true
+    }).then(function (willDelete) {
+      if (willDelete) {
+        _axios2.default.put("http://68.183.73.106:3004/questions/report/" + answerId).then(function (_ref4) {
+          var data = _ref4.data;
 
-      console.log(data);
-      (0, _sweetalert2.default)("Good job!", "The report has been sent!", "success");
-    }).catch(function (err) {
-      return console.log(err);
+          console.log(data);
+          (0, _sweetalert2.default)("Thank you the report has been sent to the admin!", {
+            icon: "success"
+          });
+        }).catch(function (err) {
+          return console.log(err);
+        });
+      } else {
+        (0, _sweetalert2.default)("Thank you for making sure!");
+      }
     });
   };
 
@@ -55758,13 +55776,27 @@ var QuestionsList = function QuestionsList(_ref) {
   var reportQuestion = function reportQuestion(e, question_id) {
     e.preventDefault();
     console.log("clicked", question_id);
-    _axios2.default.put("http://68.183.73.106:3004/questions/report/question/" + question_id).then(function (_ref5) {
-      var data = _ref5.data;
+    (0, _sweetalert2.default)({
+      title: "Are you sure?",
+      text: "Once you click ok the report will be sent!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true
+    }).then(function (willDelete) {
+      if (willDelete) {
+        _axios2.default.put("http://68.183.73.106:3004/questions/report/question/" + question_id).then(function (_ref5) {
+          var data = _ref5.data;
 
-      console.log(data);
-      (0, _sweetalert2.default)("Good job!", "The report has been sent!", "success");
-    }).catch(function (err) {
-      return console.log(err);
+          console.log(data);
+          (0, _sweetalert2.default)("Thank you the report has been sent to the admin!", {
+            icon: "success"
+          });
+        }).catch(function (err) {
+          return console.log(err);
+        });
+      } else {
+        (0, _sweetalert2.default)("Thank you for making sure!");
+      }
     });
   };
   return _react2.default.createElement(
@@ -55867,7 +55899,7 @@ var QuestionsList = function QuestionsList(_ref) {
           )
         );
       }) : null,
-      state[0] ? answerCounter < state[0].results.length && count === state[0].results.length ? _react2.default.createElement(
+      state[0] ? answerCounter < state[0].results.length && count > state[0].results.length ? _react2.default.createElement(
         "h5",
         {
           className: "question-questions",
@@ -55885,12 +55917,12 @@ var QuestionsList = function QuestionsList(_ref) {
       _react2.default.createElement(
         "div",
         { className: "btn-questions" },
-        state[0] ? count === state[0].results.length ? _react2.default.createElement(
+        state[0] ? count > state[0].results.length ? _react2.default.createElement(
           "button",
           {
             className: "ui basic button",
             onClick: function onClick() {
-              return setCount(count + 2);
+              return setCount(count + 1);
             }
           },
           "MORE ANSWERED QUESTIONS"
@@ -57234,9 +57266,7 @@ var AddQuestion = function AddQuestion(_ref) {
 
   var updateFormQuestion = function updateFormQuestion(event) {
     setFormQuestion(_extends({}, formQ, _defineProperty({}, event.target.name, event.target.value)));
-    console.log(formQ);
   };
-
   return _react2.default.createElement(
     "div",
     null,

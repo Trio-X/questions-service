@@ -16,8 +16,7 @@ const { routerReportAnswer } = require("./routers/routerReportAnswer");
 const { routerReportQuestion } = require("./routers/routerReportQuestion");
 const urlencodedParser = bodyParser.urlencoded({ extended: true });
 const cors = require("cors");
-const token = "6b62be346efafb380dd1297e6a12cbf825d65953";
-module.exports.token = token;
+
 app.use(compression());
 app.use(cors());
 app.use(morgan("dev"));
@@ -27,6 +26,7 @@ app.use(express.static(path.join(__dirname, "../public")));
  * applying @routerQuestionList as a middleware
  *
  * */
+
 app.use("/questions/q", routerQuestionList);
 app.use("/questions/a", routerAnswersList);
 app.use("/questions/", routerVoteForQuestions);
