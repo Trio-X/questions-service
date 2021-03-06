@@ -1,5 +1,4 @@
 const axios = require("axios");
-const { token } = require("../index");
 const voteQuestion = async (req, res) => {
   try {
     const { data } = await axios.put(

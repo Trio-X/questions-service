@@ -7,7 +7,13 @@ import Answers from "./Answers.jsx";
 import AddQuestion from "./AddQuestions.jsx";
 import swal from "sweetalert";
 
-const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
+const QuestionsList = ({
+  setCount,
+  setAnswer,
+  setPage,
+  count,
+  getDataQuestions,
+}) => {
   /**
    * @store {any}
    * @useSelector method, Hooks to get any data you wish from the redux store.
@@ -54,7 +60,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
       isMounted = false;
       setAnswerTrigger(answerTrigger + 1);
     };
-  }, [currentQuestionId, answerTrigger]);
+  }, [currentQuestionId]);
   /**
    * @dis a function that display the modal of adding an answer and it wil pop up component addAnswer.
    * @param none
@@ -113,6 +119,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
       })
       .then(({ data }) => {
         console.log(data);
+        getDataQuestions();
       })
       .catch((err) => console.log(err));
     console.log("clickedOn", state[0].product_id);
@@ -140,26 +147,56 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
   const report = (e, answerId) => {
     e.preventDefault();
     console.log("clicked", answerId);
-    axios
-      .put("http://68.183.73.106:3004/questions/report/" + answerId)
-      .then(({ data }) => {
-        console.log(data);
-        swal("Good job!", "The report has been sent!", "success");
-      })
-      .catch((err) => console.log(err));
+    swal({
+      title: "Are you sure?",
+      text: "Once you click ok the report will be sent!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        axios
+          .put("http://68.183.73.106:3004/questions/report/" + answerId)
+          .then(({ data }) => {
+            console.log(data);
+            swal("Thank you the report has been sent to the admin!", {
+              icon: "success",
+            });
+          })
+          .catch((err) => console.log(err));
+      } else {
+        swal("Thank you for making sure!");
+      }
+    });
   };
 
   // report question function
   const reportQuestion = (e, question_id) => {
     e.preventDefault();
     console.log("clicked", question_id);
-    axios
-      .put("http://68.183.73.106:3004/questions/report/question/" + question_id)
-      .then(({ data }) => {
-        console.log(data);
-        swal("Good job!", "The report has been sent!", "success");
-      })
-      .catch((err) => console.log(err));
+    swal({
+      title: "Are you sure?",
+      text: "Once you click ok the report will be sent!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        axios
+          .put(
+            "http://68.183.73.106:3004/questions/report/question/" + question_id
+          )
+          .then(({ data }) => {
+            console.log(data);
+            swal("Thank you the report has been sent to the admin!", {
+              icon: "success",
+            });
+          })
+          .catch((err) => console.log(err));
+      } else {
+        swal("Thank you for making sure!");
+      }
+    });
   };
   return (
     <div className="service3-container">
@@ -226,7 +263,7 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
           : null}
         {state[0] ? (
           answerCounter < state[0].results.length &&
-          count === state[0].results.length ? (
+          count > state[0].results.length ? (
             <h5
               className="question-questions"
               id="load-more-btn"
@@ -240,10 +277,10 @@ const QuestionsList = ({ setCount, setAnswer, setPage, count }) => {
       <div className="btn-container">
         <div className="btn-questions">
           {state[0] ? (
-            count === state[0].results.length ? (
+            count > state[0].results.length ? (
               <button
                 className="ui basic button"
-                onClick={() => setCount(count + 2)}
+                onClick={() => setCount(count + 1)}
               >
                 MORE ANSWERED QUESTIONS
               </button>

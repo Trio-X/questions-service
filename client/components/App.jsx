@@ -19,7 +19,7 @@ const App = () => {
    * @return {array of object} and save it in the global store.
    */
 
-  const [count, setCount] = useState(5);
+  const [count, setCount] = useState(6);
   /**
    * @useDispatch Hooks feature.
    * @param none we save it in a const variable so we can use it to save the data in the global store redux.
@@ -27,21 +27,26 @@ const App = () => {
 
   const dispatch = useDispatch();
 
+  const getDataQuestions = () => {
+    // http://68.183.73.106:3004
+    axios
+      .get("http://68.183.73.106:3004/questions/q/" + page + "/" + count)
+      .then(({ data }) => {
+        console.log(data);
+        let newData = {
+          product_id: data.product_id,
+          results: data.results.sort(
+            (a, b) => b.question_helpfulness - a.question_helpfulness
+          ),
+        };
+        dispatch(getQuestions(newData));
+      })
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
-      axios
-        .get("http://68.183.73.106:3004/questions/q/" + page + "/" + count)
-        .then(({ data }) => {
-          let newData = {
-            product_id: data.product_id,
-            results: data.results.sort(
-              (a, b) => b.question_helpfulness - a.question_helpfulness
-            ),
-          };
-          dispatch(getQuestions(newData));
-        })
-        .catch((err) => console.log(err));
+      getDataQuestions();
     }
     return () => {
       isMounted = false;
@@ -51,10 +56,20 @@ const App = () => {
   return (
     <div className="app-container">
       <div>
-        <SearchBar setPage={setPage} count={count} page={page} />
+        <SearchBar
+          setPage={setPage}
+          count={count}
+          page={page}
+          getDataQuestions={getDataQuestions}
+        />
       </div>
       <div>
-        <QuestionsList setCount={setCount} setPage={setPage} count={count} />
+        <QuestionsList
+          setCount={setCount}
+          setPage={setPage}
+          count={count}
+          getDataQuestions={getDataQuestions}
+        />
       </div>
     </div>
   );

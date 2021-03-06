@@ -1,23 +1,15 @@
 const axios = require("axios");
-const { token } = require("../index");
 module.exports = {
   addQuestion: async (req, res) => {
     try {
-      console.log("==>>>", {
-        name: req.body.name,
-        body: req.body.body,
-        email: req.body.email,
-        product_id: req.body.product_id,
-      });
-      let newData = {
-        name: req.body.name,
-        body: req.body.body,
-        email: req.body.email,
-        product_id: req.body.product_id * 1,
-      };
       const { data } = await axios.post(
         `https://app-hrsei-api.herokuapp.com/api/fec2/hrnyc/qa/questions`,
-        newData,
+        {
+          name: req.body.name,
+          body: req.body.body,
+          email: req.body.email,
+          product_id: req.body.product_id * 1,
+        },
         {
           headers: {
             Authorization: token,

@@ -1,5 +1,4 @@
 const axios = require("axios");
-const { token } = require("../index");
 
 const reportAnswers = async (req, res) => {
   try {

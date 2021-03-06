@@ -6,15 +6,12 @@ const AddQuestion = ({ dis, exit, onSubmitQuestion, exitQuestion }) => {
     body: "",
     email: "",
   });
-
   const updateFormQuestion = (event) => {
     setFormQuestion({
       ...formQ,
       [event.target.name]: event.target.value,
     });
-    console.log(formQ);
   };
-
   return (
     <div>
       <div id="display-question" className="modal">
