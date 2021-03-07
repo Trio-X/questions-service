@@ -6463,6 +6463,12 @@ Object(__WEBPACK_IMPORTED_MODULE_7__utils_batch__["b" /* setBatch */])(__WEBPACK
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(212);
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
@@ -6473,12 +6479,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(212);
 
 /***/ }),
 /* 9 */
@@ -7609,7 +7609,7 @@ var getBatch = function getBatch() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_is__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_is__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_is___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_is__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_Subscription__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_useIsomorphicLayoutEffect__ = __webpack_require__(22);
@@ -52785,7 +52785,7 @@ if (process.env.NODE_ENV !== 'production') {
  */
 
 if (process.env.NODE_ENV !== 'production') {
-  var ReactIs = __webpack_require__(7);
+  var ReactIs = __webpack_require__(8);
 
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
@@ -53024,7 +53024,7 @@ exports.typeOf = typeOf;
 
 
 
-var ReactIs = __webpack_require__(7);
+var ReactIs = __webpack_require__(8);
 var assign = __webpack_require__(5);
 
 var ReactPropTypesSecret = __webpack_require__(12);
@@ -53732,7 +53732,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 "use strict";
 
 
-var reactIs = __webpack_require__(7);
+var reactIs = __webpack_require__(8);
 
 /**
  * Copyright 2015, Yahoo! Inc.
@@ -54516,7 +54516,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(6);
 
-var _axios = __webpack_require__(8);
+var _axios = __webpack_require__(7);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -54631,7 +54631,7 @@ var _getQuestions = __webpack_require__(29);
 
 var _getQuestions2 = _interopRequireDefault(_getQuestions);
 
-var _axios = __webpack_require__(8);
+var _axios = __webpack_require__(7);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -55567,7 +55567,7 @@ var _reactRedux = __webpack_require__(6);
 
 var _uuid = __webpack_require__(38);
 
-var _axios = __webpack_require__(8);
+var _axios = __webpack_require__(7);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -56488,7 +56488,7 @@ var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _axios = __webpack_require__(8);
+var _axios = __webpack_require__(7);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -56547,10 +56547,10 @@ var AddAnswer = function AddAnswer(_ref) {
     null,
     _react2.default.createElement(
       "div",
-      { id: "bbb", className: "modal" },
+      { id: "bbb", className: "modal-questionsAndAnswers" },
       _react2.default.createElement(
         "form",
-        { className: "modal-content animate" },
+        { className: "modal-content-questionsAndAnswers animate" },
         _react2.default.createElement(
           "div",
           { className: "imgcontainer" },
@@ -56700,7 +56700,7 @@ var _reactRedux = __webpack_require__(6);
 
 var _uuid = __webpack_require__(38);
 
-var _axios = __webpack_require__(8);
+var _axios = __webpack_require__(7);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -57305,10 +57305,10 @@ var AddQuestion = function AddQuestion(_ref) {
     null,
     _react2.default.createElement(
       "div",
-      { id: "display-question", className: "modal" },
+      { id: "display-question", className: "modal-questionsAndAnswers" },
       _react2.default.createElement(
         "form",
-        { className: "modal-content animate" },
+        { className: "modal-content-questionsAndAnswers animate" },
         _react2.default.createElement(
           "div",
           { className: "imgcontainer" },
