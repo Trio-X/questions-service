@@ -23,7 +23,7 @@ const SearchBar = ({ count, setPage, page, getDataQuestions }) => {
     if (isMounted) {
       if (!query) {
         setHandleChange("");
-      } else if (state[0] && query.search.length > 3) {
+      } else if (state[0] && query.search.length > 3) { 
         var currentQuestioList = [];
         state[0].results.filter((q) => {
           if (

@@ -35,8 +35,8 @@ const AddAnswer = ({ dis, exit, onSubmit }) => {
 
   return (
     <div>
-      <div id="bbb" className="modal">
-        <form className="modal-content animate">
+      <div id="bbb" className="modal-questionsAndAnswers">
+        <form className="modal-content-questionsAndAnswers animate">
           <div className="imgcontainer">
             <span onClick={() => exit()} className="close" title="Close Modal">
               &times;

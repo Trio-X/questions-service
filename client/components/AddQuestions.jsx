@@ -14,8 +14,8 @@ const AddQuestion = ({ dis, exit, onSubmitQuestion, exitQuestion }) => {
   };
   return (
     <div>
-      <div id="display-question" className="modal">
-        <form className="modal-content animate">
+      <div id="display-question" className="modal-questionsAndAnswers">
+        <form className="modal-content-questionsAndAnswers animate">
           <div className="imgcontainer">
             <span
               onClick={() => exitQuestion()}
