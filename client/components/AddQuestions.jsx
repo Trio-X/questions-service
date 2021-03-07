@@ -30,7 +30,7 @@ const AddQuestion = ({ dis, exit, onSubmitQuestion, exitQuestion }) => {
               className="avatar"
             />
           </div>
-          <div className="ui form">
+          <div className="ui form form-questionAndAnswers">
             <div className="fields">
               <div className="field">
                 <label>Questions</label>
@@ -65,9 +65,10 @@ const AddQuestion = ({ dis, exit, onSubmitQuestion, exitQuestion }) => {
                 </div>
               </div>
             </div>
-            <div className="field">
+            <div className="field btn-form-questionAndAnswers">
               <button
-                className="ui basic button"
+                className="ui basic button "
+                id="btn-form-questionAndAnswers"
                 onClick={(e) => onSubmitQuestion(e, formQ)}
               >
                 <i className="icon pencil alternate"></i>

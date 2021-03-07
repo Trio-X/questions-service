@@ -6,6 +6,16 @@
   font-size: 1.2em;
   margin-bottom: 5%;
 }
+.uploadImage {
+  display: flex !important;
+  justify-content: space-between !important;
+  margin: 5% !important;
+}
+.uploadIcon {
+  cursor: pointer !important;
+  font-size: 2em !important;
+  margin: 2% !important;
+}
 .search-bar-questions {
   background-color: #ffffff !important;
   border-width: none !important;
@@ -32,7 +42,6 @@
   max-width: 100% !important;
   min-width: 700px !important;
   margin: auto !important;
-  /* margin-left: 50px; */
 }
 .question-title {
   border-color: #0f1111;
@@ -65,7 +74,6 @@
   margin-left: 36px;
   padding: 0px 0px 0px;
 }
-/* the first css was for the nav bar and the title above it  */
 .answer-style {
   font-family: "Source Sans Pro", sans-serif;
   margin: 2%;
@@ -114,7 +122,6 @@
   gap: normal !important;
   justify-content: space-between !important;
   line-height: 16.08px !important;
-  /* padding: 4px !important; */
 }
 .summary-child {
   align-items: center important;
@@ -123,20 +130,15 @@
   display: flex important;
   flex-basis: 0px important;
   margin: auto !important;
-  /* font-size: 12px important; */
   gap: normal important;
   justify-content: center important;
   line-height: 16.08px important;
-  /* margin: -6px -4px important;
-  padding: 0px 12px important; */
 }
 .divider-answer {
   font-weight: bold !important;
 }
 
 .image-container {
-  /* max-height: 60px !important;
-  min-height: 50px !important; */
   display: flex;
   float: left;
 }
@@ -159,7 +161,6 @@
   color: black !important;
   text-decoration: underline !important;
   cursor: pointer !important;
-  /* border-right: 1px solid black; */
 }
 
 .helpful-question {
@@ -201,33 +202,28 @@ span.psw {
   float: right;
   padding-top: 16px;
 }
-
-/* The Modal (background) */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  display: none;
+  position: fixed;
+  z-index: 1;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
   padding-top: 60px;
-  /* margin-left: 700px; */
 }
 
-/* Modal Content/Box */
 .modal-content {
   background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  margin: 5% auto 15% auto;
   border: 1px solid #888;
-  width: 50%; /* Could be more or less, depending on screen size */
-  height: 70%;
+  width: 50%;
+  height: 80%;
 }
 
-/* The Close Button (x) */
 .close {
   position: absolute;
   right: 25px;
@@ -243,13 +239,11 @@ span.psw {
   cursor: pointer;
 }
 
-/* Add Zoom Animation */
 .animate {
   -webkit-animation: animatezoom 0.6s;
   animation: animatezoom 0.6s;
 }
 
-/* Add Zoom Animation */
 .animate {
   -webkit-animation: animatezoom 0.6s;
   animation: animatezoom 0.6s;
@@ -272,7 +266,6 @@ span.psw {
     transform: scale(1);
   }
 }
-/* Center the image and position the close button */
 .imgcontainer {
   text-align: center;
   margin: 24px 0 12px 0;
@@ -288,9 +281,22 @@ button:hover {
 .inverted {
   background-color: none !important;
 }
-/* form of add question */
-.form {
-  display: block important;
-  justify-content: center !important;
-  margin-left: 30% !important;
+.form-questionAndAnswers {
+  display: block !important;
+  justify-content: baseline !important;
+  margin: 5% !important;
+}
+.fields {
+  display: block !important;
+  justify-content: baseline !important;
+  margin: 5% !important;
+}
+.btn-form-questionAndAnswers {
+  position: relative !important;
+  max-width: fit-content !important;
+  margin: auto !important;
+}
+#btn-form-questionAndAnswers {
+  position: relative !important;
+  padding: 2em !important;
 }

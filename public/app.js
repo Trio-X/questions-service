@@ -55735,9 +55735,10 @@ var QuestionsList = function QuestionsList(_ref) {
    * @param {*objects} newData containing the data that is collecteted from the add form question
    * @returns submit a post
    */
-  var onSubmit = function onSubmit(e, newData) {
+  var onSubmit = function onSubmit(e, newData, image) {
     e.preventDefault();
-    _axios2.default.post("http://68.183.73.106:3004/questions/addAnswers/" + currentQuestionId, newData).then(function (_ref3) {
+    var form = Object.assign(newData, image);
+    _axios2.default.post("http://68.183.73.106:3004/questions/addAnswers/" + currentQuestionId, form).then(function (_ref3) {
       var data = _ref3.data;
 
       console.log(data);
@@ -56487,13 +56488,15 @@ var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _axios = __webpack_require__(8);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var AddAnswer = function AddAnswer(_ref) {
-  var _React$createElement;
-
   var dis = _ref.dis,
       exit = _ref.exit,
       onSubmit = _ref.onSubmit;
@@ -56511,6 +56514,32 @@ var AddAnswer = function AddAnswer(_ref) {
   var updateFormData = function updateFormData(event) {
     setFormData(_extends({}, formData, _defineProperty({}, event.target.name, event.target.value)));
     console.log(formData);
+  };
+
+  var _useState3 = (0, _react.useState)(""),
+      _useState4 = _slicedToArray(_useState3, 2),
+      uploadImage = _useState4[0],
+      setUploadImage = _useState4[1];
+
+  var _useState5 = (0, _react.useState)({}),
+      _useState6 = _slicedToArray(_useState5, 2),
+      uploadedImage = _useState6[0],
+      setUploadedImage = _useState6[1];
+
+  var uploadImages = function uploadImages() {
+    var image = new FormData();
+    image.append("file", uploadImage);
+    image.append("upload_preset", "lwsk5njh");
+    console.log(image);
+    _axios2.default.post("https://api.cloudinary.com/v1_1/daakldabl/image/upload", image).then(function (_ref2) {
+      var data = _ref2.data;
+
+      console.log("upload", data);
+      console.log("imageId", data.url);
+      setUploadedImage({ photos: data.url });
+    }).catch(function (err) {
+      return console.log(err);
+    });
   };
 
   return _react2.default.createElement(
@@ -56540,7 +56569,7 @@ var AddAnswer = function AddAnswer(_ref) {
         ),
         _react2.default.createElement(
           "div",
-          { className: "ui form" },
+          { className: "ui form form-questionAndAnswers" },
           _react2.default.createElement(
             "div",
             { className: "fields" },
@@ -56604,35 +56633,39 @@ var AddAnswer = function AddAnswer(_ref) {
             ),
             _react2.default.createElement(
               "div",
-              { className: "field" },
+              { className: "field " },
               _react2.default.createElement(
                 "div",
-                { className: "field" },
+                { className: "field uploadImage " },
                 _react2.default.createElement(
                   "label",
                   null,
                   "Photos"
                 ),
-                _react2.default.createElement("input", (_React$createElement = {
-                  type: "text",
-                  placeholder: "photos..",
+                _react2.default.createElement("input", {
+                  type: "file",
                   name: "photos",
                   onChange: function onChange(e) {
-                    return updateFormData(e);
-                  }
-                }, _defineProperty(_React$createElement, "placeholder", "photos link..."), _defineProperty(_React$createElement, "required", true), _React$createElement))
+                    return setUploadImage(e.target.files[0]);
+                  },
+                  required: true
+                }),
+                _react2.default.createElement("i", {
+                  className: "icon download uploadIcon",
+                  onClick: uploadImages
+                })
               )
             )
           ),
           _react2.default.createElement(
             "div",
-            { className: "field" },
+            { className: "field btn-form-questionAndAnswers" },
             _react2.default.createElement(
               "button",
               {
                 className: "ui basic button",
                 onClick: function onClick(e) {
-                  return onSubmit(e, formData);
+                  return onSubmit(e, formData, uploadedImage);
                 }
               },
               _react2.default.createElement("i", { className: "icon pencil alternate" }),
@@ -57298,7 +57331,7 @@ var AddQuestion = function AddQuestion(_ref) {
         ),
         _react2.default.createElement(
           "div",
-          { className: "ui form" },
+          { className: "ui form form-questionAndAnswers" },
           _react2.default.createElement(
             "div",
             { className: "fields" },
@@ -57363,11 +57396,12 @@ var AddQuestion = function AddQuestion(_ref) {
           ),
           _react2.default.createElement(
             "div",
-            { className: "field" },
+            { className: "field btn-form-questionAndAnswers" },
             _react2.default.createElement(
               "button",
               {
-                className: "ui basic button",
+                className: "ui basic button ",
+                id: "btn-form-questionAndAnswers",
                 onClick: function onClick(e) {
                   return onSubmitQuestion(e, formQ);
                 }

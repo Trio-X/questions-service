@@ -131,12 +131,13 @@ const QuestionsList = ({
    * @param {*objects} newData containing the data that is collecteted from the add form question
    * @returns submit a post
    */
-  const onSubmit = (e, newData) => {
+  const onSubmit = (e, newData, image) => {
     e.preventDefault();
+    let form = Object.assign(newData, image);
     axios
       .post(
         "http://68.183.73.106:3004/questions/addAnswers/" + currentQuestionId,
-        newData
+        form
       )
       .then(({ data }) => {
         console.log(data);
